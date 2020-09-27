@@ -1,38 +1,81 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+a {
+  color: #61dafb;
 }
 
 .App-header {
+  text-align: left;
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 6vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.App-header h1 {
+  font-size: 24px;
+  margin: 0 0 0 15px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+main {
+  height: 94vh;
+}
+
+section.code {
+  height: 47vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+section.code > div {
+  flex: 1;
+  padding: 3px;
+  background: #bbb;
+}
+
+section.code > div > h2 {
+  height: 20px;
+  line-height: 20px;
+  margin: 0;
+  text-align: left;
+  font-size: 16px;
+}
+
+section.preview {
+  height: 47vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+section.preview .console {
+  flex: 1;
+  background: #bbb;
+  padding: 3px;
+}
+
+section.preview .console h2 {
+  height: 20px;
+  line-height: 20px;
+  margin: 0;
+  text-align: left;
+  font-size: 16px;
+}
+
+section.preview .console .console-content {
+  height: calc(47vh - 26px);
+  padding: 3px;
+  box-sizing: border-box;
+  background: #000;
+  color: #f4f4f4;
+}
+
+section.preview iframe {
+  border: 0;
+  width: 100%;
+  height: 47vh;
+  flex: 2;
 }
