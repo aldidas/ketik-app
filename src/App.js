@@ -1,23 +1,27 @@
-import React, { useRef, useState, useEffect } from 'react'
-import AceEditor from 'react-ace'
-import './App.css'
-import 'ace-builds/src-noconflict/mode-html'
-import 'ace-builds/src-noconflict/mode-javascript'
-import 'ace-builds/src-noconflict/mode-css'
-import 'ace-builds/src-noconflict/theme-gruvbox'
+import React, { useRef, useState, useEffect } from "react";
+import AceEditor from "react-ace";
+import { Console, Hook, Unhook } from "console-feed";
+import "./App.css";
+import "ace-builds/src-noconflict/mode-html";
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/mode-css";
+import "ace-builds/src-noconflict/theme-gruvbox";
 
 function App() {
-  const iframeRef = useRef(null)
-  const [js, setJs] = useState('')
-  const [css, setCss] = useState('')
-  const [html, setHtml] = useState('')
+  const iframeRef = useRef(null);
+  const [js, setJs] = useState("");
+  const [css, setCss] = useState("");
+  const [html, setHtml] = useState("");
+  const [logs, setLogs] = useState([]);
 
-  useEffect(() => {
-    console.log(iframeRef.current.contentWindow.console)
-    //iframeRef.current.contentWindow.console.addEventListener('log', value => {
-    //console.log.apply(null, value)
-    //})
-  }, [])
+  // useEffect(() => {
+  //   Hook(
+  //     iframeRef.current.contentWindow.console,
+  //     (log) => setLogs((curLogs) => [...curLogs, log]),
+  //     false
+  //   );
+  //   return () => Unhook(iframeRef.current.contentWindow.console);
+  // }, []);
 
   const renderContent = () => {
     const content = `
@@ -33,9 +37,9 @@ function App() {
            <script>${js}</script>
         </body>
         </html>
-        `
-    return `data:text/html,${encodeURIComponent(content)}`
-  }
+        `;
+    return `data:text/html,${encodeURIComponent(content)}`;
+  };
 
   return (
     <div className="App">
@@ -76,15 +80,28 @@ function App() {
           </div>
         </section>
         <section className="preview">
-          <iframe ref={iframeRef} title="preview" src={renderContent()} />
+          <iframe
+            ref={iframeRef}
+            title="preview"
+            src={renderContent()}
+            onLoad={() => {
+              Hook(
+                iframeRef.current.contentWindow.console,
+                (log) => setLogs((curLog) => [...curLog, log]),
+                false
+              );
+            }}
+          />
           <div className="console">
             <h2>Console</h2>
-            <div className="console-content">Content</div>
+            <div className="console-content">
+              <Console logs={logs} variant="dark" />
+            </div>
           </div>
         </section>
       </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
